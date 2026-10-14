@@ -1,0 +1,56 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+[ -z "$PS1" ] && return
+
+HISTCONTROL=ignoredups:ignorespace
+
+shopt -s histappend
+
+shopt -s checkwinsize
+
+[ $UID -eq 0 ] && user_color=31 || user_color=32
+host_color=$(hostname | od | tr ' ' '\n' | awk '{total = total + $1}END{print 31+ (total % 7)}')
+host_color_dark_light=$(hostname | od | tr ' ' '\n' | awk '{total = total + $1}END{print (total % 2)}')
+
+case $TERM in
+    screen*)
+        SCREENTITLE='\[\ek\e\\\]\[\ek\W\e\\\]'
+        export TERM=screen-256color
+        ;;
+    xterm)
+        export TERM=${TERM/xterm*/xterm-256color}
+        ;;
+    *)
+        SCREENTITLE=''
+        ;;
+esac
+
+PS1="\[\033[0${host_color_dark_light};${user_color}m\]\u\[\033[0${host_color_dark_light};${host_color}m\]@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]$ "
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+export EDITOR=vim
+
+if [ -d "$HOME/bin" ] ; then
+  if [[ ! $PATH =~ "$HOME/bin" ]]; then
+    PATH="$HOME/bin:$PATH"
+  fi
+fi

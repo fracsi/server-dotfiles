@@ -1,0 +1,26 @@
+autodetach on
+caption always "%{.Kk} %-w%{.kw} %n%f %t %{-}%+w %=%{b dw} %H %{-b .d}%c %Y-%m-%d"
+
+defscrollback 2048
+startup_message off
+vbell off
+
+bindkey ^[[5;3~ prev # Alt+PgUp
+bindkey ^[[6;3~ next # Alt+PgUp
+bindkey -k F1 prev
+bindkey -k F2 next
+# PREVIOUS WINDOW
+# NEXT WINDOW
+
+bind ' ' windowlist -b 
+
+# Terminal settings
+term xterm-256color
+termcap xterm-256color 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+terminfo xterm-256color 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo xterm* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo xterm* "hs:ts=\E]0;:fs=\007:ds=\E]0;\007"
+termcapinfo xterm* ti@:te@
+attrcolor b ".I"
+defbce "on"
+altscreen off
