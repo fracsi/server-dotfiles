@@ -2,6 +2,7 @@
 
 [ -z "$PS1" ] && return
 
+HISTFILE=$HOME/.bash_history
 HISTCONTROL=ignoredups:ignorespace
 
 shopt -s histappend
