@@ -6,8 +6,10 @@ HISTFILE=$HOME/.bash_history
 HISTCONTROL=ignoredups:ignorespace
 
 shopt -s histappend
-
 shopt -s checkwinsize
+
+history -c
+history -r
 
 [ $UID -eq 0 ] && user_color=31 || user_color=32
 host_color=$(hostname | od | tr ' ' '\n' | awk '{total = total + $1}END{print 31+ (total % 7)}')
